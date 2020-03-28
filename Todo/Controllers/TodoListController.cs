@@ -63,8 +63,8 @@ namespace Todo.Controllers
         [HttpGet]
         public IActionResult Edit(int todoListId)
         {
-            var todoItem = dbContext.SingleTodoList(todoListId);
-            var fields = TodoListEditFieldsFactory.Create(todoItem);
+            var todoList = dbContext.SingleTodoList(todoListId);
+            var fields = TodoListEditFieldsFactory.Create(todoList);
             return View(fields);
         }
 
