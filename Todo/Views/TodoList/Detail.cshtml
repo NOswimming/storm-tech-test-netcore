@@ -25,7 +25,20 @@
             </a>
         </li>
 
-        @foreach (var item in Model.Items)
+        <li class="list-group-item">
+            <a asp-action="Detail" asp-controller="TodoList" asp-route-todoListId="@Model.TodoListId" asp-route-hideDoneItems="@(!Model.HideItemsMarkedAsDone)" class="btn btn-default">
+                @if (Model.HideItemsMarkedAsDone)
+                {
+                    <text>Show Items Marked as Done</text>
+                }
+                else
+                {
+                    <text>Hide Items Marked as Done</text>
+                }
+            </a>
+        </li>
+
+        @foreach (var item in Model.Items.Where(i => !Model.HideItemsMarkedAsDone || !i.IsDone))
         {
             string contextualClass;
             switch (item.Importance)
