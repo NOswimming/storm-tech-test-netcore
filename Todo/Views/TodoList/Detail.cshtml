@@ -25,7 +25,7 @@
             </a>
         </li>
 
-        @foreach (var item in Model.Items.OrderBy(i => i.Importance))
+        @foreach (var item in Model.Items)
         {
             string contextualClass;
             switch (item.Importance)
