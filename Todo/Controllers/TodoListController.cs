@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Todo.Data;
 using Todo.Data.Entities;
+using Todo.EntityModelMappers.TodoItems;
 using Todo.EntityModelMappers.TodoLists;
 using Todo.Models.TodoLists;
 using Todo.Services;
@@ -36,6 +37,7 @@ namespace Todo.Controllers
             var todoList = dbContext.SingleTodoList(todoListId);
             var viewmodel = TodoListDetailViewmodelFactory.Create(todoList, orderBy);
             viewmodel.HideItemsMarkedAsDone = hideDoneItems;
+            viewmodel.newTodoItem = TodoItemCreateFieldsFactory.Create(todoList, todoList.Owner.Id);
             return View(viewmodel);
         }
 

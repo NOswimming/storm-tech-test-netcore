@@ -1,4 +1,4 @@
-﻿@using Todo.Controllers
+﻿@using Todo.Data
 @using Todo.Data.Entities
 @using Todo.Services
 @model Todo.Models.TodoLists.TodoListDetailViewmodel
@@ -119,4 +119,7 @@
         </li>
         }
     </ul>
+
+    @* Add list item inline using partial view *@
+    <partial name="~/Views/TodoItem/_CreatePartial.cshtml" model="@Model.newTodoItem" />
 </div>
