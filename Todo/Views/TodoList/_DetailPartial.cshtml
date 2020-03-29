@@ -1,0 +1,104 @@
+﻿@using Todo.Data.Entities
+@using Todo.Services
+@model Todo.Models.TodoLists.TodoListDetailViewmodel
+
+
+
+<ul class="list-group">
+
+    @* Links and buttons for actions and filters *@
+    <li class="list-group-item">
+        <a asp-action="Detail" asp-controller="TodoList" asp-route-todoListId="@Model.TodoListId" asp-route-hideDoneItems="@(!Model.HideItemsMarkedAsDone)" class="btn btn-default">
+            @if (Model.HideItemsMarkedAsDone)
+            {
+                <text>Show Done Items</text>
+            }
+            else
+            {
+                <text>Hide Done Items</text>
+            }
+        </a>
+        <a asp-action="Detail" asp-controller="TodoList" asp-route-todoListId="@Model.TodoListId" asp-route-orderBy="rank" class="btn btn-default">
+            Order by Rank
+        </a>
+        <a asp-action="Detail" asp-controller="TodoList" asp-route-todoListId="@Model.TodoListId" asp-route-orderBy="importance" class="btn btn-default">
+            Order by Importance
+        </a>
+    </li>
+
+    @* Header line *@
+    <li class="list-group-item">
+        <div class="row">
+            <div class="col-md-1">
+                <text>Rank</text>
+            </div>
+
+            <div class="col-md-7">
+                <text>Title</text>
+            </div>
+
+            <div class="col-md-4 text-right">
+                <text>Responsible User</text>
+            </div>
+        </div>
+    </li>
+
+    @* Item lines *@
+    @foreach (var item in Model.Items.Where(i => !Model.HideItemsMarkedAsDone || !i.IsDone))
+    {
+        string contextualClass;
+        switch (item.Importance)
+        {
+            case Importance.High:
+                contextualClass = "list-group-item-danger";
+                break;
+            case Importance.Low:
+                contextualClass = "list-group-item-info";
+                break;
+            default:
+                contextualClass = "";
+                break;
+        }
+
+        <li class="list-group-item @contextualClass">
+
+            <div class="row">
+
+                <div class="col-md-1">
+                    <text>@item.Rank</text>
+                </div>
+
+                <div class="col-md-7">
+                    <a asp-action="Edit" asp-controller="TodoItem" asp-route-todoItemId="@item.TodoItemId">
+
+                        @if (item.IsDone)
+                        {
+                            <s>@item.Title</s>
+                        }
+                        else
+                        {
+                            <text>@item.Title</text>
+                        }
+                    </a>
+                </div>
+
+                <div class="col-md-4 text-right">
+                    <small>
+                        @if (item.ResponsibleParty.FullName != null)
+                        {
+                            <text>@item.ResponsibleParty.FullName</text>
+                        }
+                        else
+                        {
+                            <i>Name Unavailable</i>
+                        }
+                        (@item.ResponsibleParty.UserName)
+                        <img src="https://www.gravatar.com/avatar/@Gravatar.GetHash(item.ResponsibleParty.Email)?s=30" />
+
+                    </small>
+                </div>
+            </div>
+
+        </li>
+    }
+</ul>

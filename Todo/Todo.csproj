@@ -18,6 +18,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Update="Views\TodoList\_DetailPartial.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
     <Content Update="Views\TodoList\Detail.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>

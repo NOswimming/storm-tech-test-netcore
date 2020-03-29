@@ -37,6 +37,7 @@ namespace Todo.Controllers
             var todoList = dbContext.SingleTodoList(todoListId);
             var viewmodel = TodoListDetailViewmodelFactory.Create(todoList, orderBy);
             viewmodel.HideItemsMarkedAsDone = hideDoneItems;
+            viewmodel.OrderBy = orderBy;
             viewmodel.newTodoItem = TodoItemCreateFieldsFactory.Create(todoList, todoList.Owner.Id);
             return View(viewmodel);
         }
@@ -85,6 +86,25 @@ namespace Todo.Controllers
             await dbContext.SaveChangesAsync();
 
             return RedirectToAction(nameof(Detail), new { todoListId = todoList.TodoListId });
+        }
+
+        public async Task<ActionResult> CreateTodoItem(int todoListId, string todoListTitle, 
+            string title, Importance importance, int rank, string responsiblePartyId,
+            bool hideDoneItems, string orderBy)
+        {
+            // Create Item
+            var item = new TodoItem(todoListId, responsiblePartyId, title, importance, rank);
+
+            await dbContext.AddAsync(item);
+            await dbContext.SaveChangesAsync();
+
+            // Render partial view for display
+            var todoList = dbContext.SingleTodoList(todoListId);
+            var viewmodel = TodoListDetailViewmodelFactory.Create(todoList, orderBy);
+            viewmodel.HideItemsMarkedAsDone = hideDoneItems;
+            viewmodel.OrderBy = orderBy;
+            viewmodel.newTodoItem = TodoItemCreateFieldsFactory.Create(todoList, todoList.Owner.Id);
+            return PartialView("_DetailPartial", viewmodel);
         }
     }
 }
