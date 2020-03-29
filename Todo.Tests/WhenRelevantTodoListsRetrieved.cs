@@ -98,5 +98,17 @@ namespace Todo.Tests
                 Assert.Contains(ril, resultTodoLists);
             });
         }
+
+        [Fact]
+        public void ExcludesAllListsWhereUserIsNotOwnerOrResponsiblePartyForItem()
+        {
+            var excludedLists = testFixture.ApplicationDbContext.TodoLists
+                .Where(l => l.Owner != aliceIdentityUser && l.Items.All(i => i.ResponsiblePartyId != aliceIdentityUser.Id));
+
+            Assert.All(excludedLists, el =>
+            {
+                Assert.DoesNotContain(el, resultTodoLists);
+            });
+        }
     }
 }
