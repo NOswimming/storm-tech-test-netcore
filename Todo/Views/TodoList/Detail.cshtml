@@ -29,12 +29,18 @@
             <a asp-action="Detail" asp-controller="TodoList" asp-route-todoListId="@Model.TodoListId" asp-route-hideDoneItems="@(!Model.HideItemsMarkedAsDone)" class="btn btn-default">
                 @if (Model.HideItemsMarkedAsDone)
                 {
-                    <text>Show Items Marked as Done</text>
+                <text>Show Done Items</text>
                 }
                 else
                 {
-                    <text>Hide Items Marked as Done</text>
+                <text>Hide Done Items</text>
                 }
+            </a>
+            <a asp-action="Detail" asp-controller="TodoList" asp-route-todoListId="@Model.TodoListId" asp-route-orderBy="rank" class="btn btn-default">
+                Order by Rank
+            </a>
+            <a asp-action="Detail" asp-controller="TodoList" asp-route-todoListId="@Model.TodoListId" asp-route-orderBy="importance" class="btn btn-default">
+                Order by Importance
             </a>
         </li>
 

@@ -20,7 +20,7 @@ namespace Todo.EntityModelMappers.TodoLists
 
         private static Func<TodoItemSummaryViewmodel, object> GetOrderByFunc(string orderBy)
         {
-            switch(orderBy.ToLowerInvariant())
+            switch(orderBy?.ToLowerInvariant())
             {
                 case "rank":
                     return new Func<TodoItemSummaryViewmodel, object>(i => i.Rank);
