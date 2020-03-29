@@ -7,24 +7,24 @@ using Xunit;
 
 namespace Todo.Tests
 {
-    public class WhenTodoListIsConvertedToDetailViewmodel
+    public class WhenTodoListIsConvertedToDetailViewmodelWithOrder
     {
         private readonly TodoList srcTodoList;
         private readonly TodoListDetailViewmodel resultFields;
 
-        public WhenTodoListIsConvertedToDetailViewmodel()
+        public WhenTodoListIsConvertedToDetailViewmodelWithOrder()
         {
             srcTodoList = new TestTodoListBuilder(new IdentityUser("alice@example.com"), "shopping")
-                    .WithItem("bread", Importance.High)
-                    .WithItem("chocolate", Importance.Low)
-                    .WithItem("milk", Importance.High)
-                    .WithItem("honey", Importance.Medium)
-                    .WithItem("magazine", Importance.Low)
-                    .WithItem("cheese", Importance.Medium)
+                    .WithItem("bread", Importance.High, 0)
+                    .WithItem("chocolate", Importance.Low, 2)
+                    .WithItem("milk", Importance.High, 1)
+                    .WithItem("honey", Importance.Medium, 3)
+                    .WithItem("magazine", Importance.Low, 4)
+                    .WithItem("cheese", Importance.Medium, 5)
                     .Build()
                 ;
 
-            resultFields = TodoListDetailViewmodelFactory.Create(srcTodoList, "importance");
+            resultFields = TodoListDetailViewmodelFactory.Create(srcTodoList, "rank");
         }
 
         [Fact]
@@ -40,9 +40,9 @@ namespace Todo.Tests
         }
 
         [Fact]
-        public void OrderedByImportance()
+        public void OrderedByRank()
         {
-            var orderedItemTitles = srcTodoList.Items.OrderBy(i => i.Importance).Select(i => i.Title);
+            var orderedItemTitles = srcTodoList.Items.OrderBy(i => i.Rank).Select(i => i.Title);
             Assert.Equal(orderedItemTitles, resultFields.Items.Select(i => i.Title));
         }
     }

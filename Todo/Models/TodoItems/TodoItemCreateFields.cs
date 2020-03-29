@@ -8,10 +8,10 @@ namespace Todo.Models.TodoItems
         public int TodoListId { get; set; }
         public string Title { get; set; }
         public string TodoListTitle { get; set; }
-
         [DisplayName("Responsible User")]
         public string ResponsiblePartyId { get; set; }
         public Importance Importance { get; set; } = Importance.Medium;
+        public int Rank { get; set; } = 0;
 
         public TodoItemCreateFields() { }
 

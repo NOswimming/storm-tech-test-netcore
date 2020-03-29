@@ -34,7 +34,7 @@ namespace Todo.Controllers
         public IActionResult Detail(int todoListId, bool hideDoneItems)
         {
             var todoList = dbContext.SingleTodoList(todoListId);
-            var viewmodel = TodoListDetailViewmodelFactory.Create(todoList);
+            var viewmodel = TodoListDetailViewmodelFactory.Create(todoList, "importance");
             viewmodel.HideItemsMarkedAsDone = hideDoneItems;
             return View(viewmodel);
         }
