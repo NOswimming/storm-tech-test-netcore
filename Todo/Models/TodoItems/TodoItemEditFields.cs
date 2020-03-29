@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System.Collections.Generic;
+using System.ComponentModel;
 using Todo.Data.Entities;
 
 namespace Todo.Models.TodoItems
@@ -13,10 +14,11 @@ namespace Todo.Models.TodoItems
         [DisplayName("Responsible User")]
         public string ResponsiblePartyId { get; set; }
         public Importance Importance { get; set; }
+        public int Rank { get; set; }
 
         public TodoItemEditFields() { }
 
-        public TodoItemEditFields(int todoListId, string todoListTitle, int todoItemId, string title, bool isDone, string responsiblePartyId, Importance importance)
+        public TodoItemEditFields(int todoListId, string todoListTitle, int todoItemId, string title, bool isDone, string responsiblePartyId, Importance importance, int rank)
         {
             TodoListId = todoListId;
             TodoListTitle = todoListTitle;
@@ -24,7 +26,8 @@ namespace Todo.Models.TodoItems
             Title = title;
             IsDone = isDone;
             ResponsiblePartyId = responsiblePartyId;
-            Importance = Importance;
+            Importance = importance;
+            Rank = rank;
         }
     }
 }
