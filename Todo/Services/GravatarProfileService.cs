@@ -2,7 +2,6 @@
 using GravatarSharp.Core.Model;
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace Todo.Services
 {
@@ -36,6 +35,11 @@ namespace Todo.Services
 
         public GravatarProfile GetGravatarProfile(string emailAddress)
         {
+            if (emailAddress == null)
+            {
+                return null;
+            }
+
             // Try to get the cached value;
             if (gravatarProfileCache.TryGetValue(emailAddress, out var cachedProfile))
             {
